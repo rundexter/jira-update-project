@@ -64,6 +64,7 @@
             "title":"Issue Type"
         }
     ],
+    "icon": "dex-jira",
     /* Required.A display name for the module */
     "title": "Jira Update Project"
 }

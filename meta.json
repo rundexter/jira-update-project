@@ -4,23 +4,66 @@
 {
     //Required. Inputs the module expects.
     "inputs": [
-        //e.g.
-        /*
         {
-            "id": "from",
-            "title":"From"
+            "id": "projectIdOrKey",
+            "title":"Project ID or Key"
+        },
+        {
+            "id": "expand",
+            "title":"Expand"
+        },
+        {
+            "id": "name",
+            "title":"Name"
+        },
+        {
+            "id": "description",
+            "title":"Description"
+        },
+        {
+            "id": "categoryId",
+            "title":"Category ID"
+        },
+        {
+            "id": "url",
+            "title":"URL"
+        },
+        {
+            "id": "lead",
+            "title":"Lead"
         }
-        */
     ],
     //Required. Outputs the module emits.
     "outputs": [
-      //e.g.
-      /*
         {
-            "id": "from",
-            "title":"From"
+            "id": "id",
+            "title":"ID"
+        },
+        {
+            "id": "self",
+            "title":"URL"
+        },
+        {
+            "id": "description",
+            "title":"Description"
+        },
+        {
+            "id": "lead",
+            "title":"Lead"
+        },
+        {
+            "id": "component",
+            "title":"Component"
+        },
+        {
+            "id": "component_description",
+            "title":"Component Descrtiption"
+        },
+        {
+            "id": "issueTypes",
+            "title":"Issue Type"
         }
-      */
     ],
-    "title": "Jira Update Project" /* Required.A display name for the module */
+    /* Required.A display name for the module */
+    "title": "Jira Update Project"
 }

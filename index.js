@@ -1,5 +1,5 @@
-var JiraApi = require('jira').JiraApi,
-    _ = require('lodash');
+var _ = require('lodash'),
+    request = require('request');
 
 var globalPickResults = {
     'id': 'id',
@@ -30,7 +30,6 @@ module.exports = {
         var auth = {
             protocol: dexter.environment('jira_protocol', 'https'),
             host: dexter.environment('jira_host'),
-            port: dexter.environment('jira_port', 443),
             user: dexter.environment('jira_user'),
             password: dexter.environment('jira_password'),
             apiVers: dexter.environment('jira_apiVers', '2')
@@ -183,26 +182,25 @@ module.exports = {
             this.fail('A [projectIdOrKey] need for this module.');
             return;
         }
-        
-        var jira = new JiraApi(auth.protocol, auth.host, auth.port, auth.user, auth.password, auth.apiVers);
 
-        var makeUri = '/project/' + projectIdOrKey;
+        var makeUri = 'project/' + projectIdOrKey,
+            qs = expand? {expand: expand} : {};
 
-        if (expand)
-            makeUri = makeUri + '?expand=' + expand;
-
-        var options = {
-            rejectUnauthorized: jira.strictSSL,
-            uri: jira.makeUri(makeUri),
+        request.put({
+            uri: auth.protocol + '://' + auth.host + '/rest/api/' + auth.apiVers + '/' + makeUri,
             body: requestBody,
-            method: 'PUT',
-            followAllRedirects: true,
+            qs: qs,
+            auth: {
+                user: auth.user,
+                pass: auth.password
+            },
             json: true
-        };
+        }, function (error, response, body) {
 
-        jira.doRequest(options, function(error, response, body) {
-
-            this.processStatus(error, response, body);
-        }.bind(this));
+            if (error)
+                this.fail(error);
+            else
+                this.complete(this.pickResult(body, globalPickResults));
+        }.bind(this))
     }
 };
